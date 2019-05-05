@@ -57,6 +57,8 @@ def main():
                     graph.add_edge(author1, author2, weight=value)
 
     output_path = os.path.join(settings.OUTPUT_PATH, "person")
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
     with open(os.path.join(output_path, "result.json"), 'w+', encoding='utf-8', errors='ignore') as f:
         json.dump(json_graph.node_link_data(graph), f, ensure_ascii=False, indent=4)
 
