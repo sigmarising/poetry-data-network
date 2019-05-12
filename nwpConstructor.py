@@ -87,8 +87,8 @@ def main():
                 node1 = content1["dynasty"] + " " + content1["author"]
                 node2 = content2["dynasty"] + " " + content2["author"]
 
-                msg = __flush_str("Step 2 - construct network {}%: compare {} with {}".format(
-                    (i + 1) / len(all_filepath_list),
+                msg = __flush_str("Step 2 - construct network {.2f}%: compare {} with {}".format(
+                    (i + 1) * 100 / len(all_filepath_list),
                     node1,
                     node2)
                 )
