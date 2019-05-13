@@ -9,7 +9,7 @@ from module.ColorLogDecorator import ColorLogDecorator
 
 INPUT_DIR = os.path.join(settings.INPUT_PATH, "nerResult")
 OUTPUT_DIR = os.path.join(settings.OUTPUT_PATH, 'networkRaw')
-ABS_THRESHOLD = 2
+ABS_THRESHOLD = 1
 
 
 def __flush_str(msg: str):
@@ -85,7 +85,7 @@ def main():
         json.dump(json_graph.node_link_data(graph), f, ensure_ascii=False, indent=4)
     nx.draw_networkx(graph, node_size=5, width=0.5)
     plt.savefig(os.path.join(OUTPUT_DIR, "location.png"))
-    print(": Done")
+    print(ColorLogDecorator.yellow(": Done"))
 
     print(ColorLogDecorator.green("- ALL DONE -", "strong"))
 
