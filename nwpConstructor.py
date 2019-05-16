@@ -103,13 +103,10 @@ def main():
     print("\r" + ColorLogDecorator.yellow(__flush_str("Step 2 - construct network: Done")))
 
     # step 3: the result output
-    print(ColorLogDecorator.yellow("Step 3 - output data in json"), end="")
+    print(ColorLogDecorator.yellow("Step 3 - output data in gexf"), end="")
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
-    with open(os.path.join(OUTPUT_DIR, "person.json"), 'w+', encoding='utf-8', errors='ignore') as f:
-        json.dump(json_graph.node_link_data(graph), f, ensure_ascii=False, indent=4)
-    nx.draw_networkx(graph, node_size=5)
-    plt.savefig(os.path.join(OUTPUT_DIR, "person.png"))
+    nx.write_gexf(graph, os.path.join(OUTPUT_DIR, "person.gexf"))
     print(ColorLogDecorator.yellow(": Done"))
 
     print(ColorLogDecorator.green("- ALL DONE -", "strong"))

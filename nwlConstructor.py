@@ -34,7 +34,8 @@ def main():
     for dynasty in os.listdir(INPUT_DIR):
         dynasty_path = os.path.join(INPUT_DIR, dynasty)
         for file in os.listdir(dynasty_path):
-            msg = __flush_str("Step 1 - init files list: {}".format(dynasty + " " + file))
+            msg = "Step 1 - init files list: {}".format(dynasty + " " + file)
+            msg = __flush_str(msg)
             msg = ColorLogDecorator.yellow(msg)
             print("\r{}".format(msg), end="")
 
@@ -64,7 +65,7 @@ def main():
                     location2 = location_list[j][0]
                     location1_num = location_list[i][1]
                     location2_num = location_list[j][1]
-                    if location1_num < NUM_THRESHOLD:
+                    if location1_num <= NUM_THRESHOLD or location2_num <= NUM_THRESHOLD:
                         continue
                     if abs(location1_num - location2_num) <= ABS_THRESHOLD:
                         if not graph.has_node(location1):
@@ -81,13 +82,10 @@ def main():
     print("\r" + ColorLogDecorator.yellow(__flush_str("Step 2 - construct network: Done")))
 
     # step 3: the result output
-    print(ColorLogDecorator.yellow("Step 3 - output data in json"), end="")
+    print(ColorLogDecorator.yellow("Step 3 - output data in gexf"), end="")
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
-    with open(os.path.join(OUTPUT_DIR, "location.json"), 'w+', encoding='utf-8', errors='ignore') as f:
-        json.dump(json_graph.node_link_data(graph), f, ensure_ascii=False, indent=4)
-    nx.draw_networkx(graph, node_size=5)
-    plt.savefig(os.path.join(OUTPUT_DIR, "location.png"))
+    nx.write_gexf(graph, os.path.join(OUTPUT_DIR, "location.gexf"))
     print(ColorLogDecorator.yellow(": Done"))
 
     print(ColorLogDecorator.green("- ALL DONE -", "strong"))
