@@ -2,15 +2,13 @@ import os
 import json
 import settings
 import networkx as nx
-import matplotlib.pyplot as plt
 from collections import Counter
-from networkx.readwrite import json_graph
 from module.ColorLogDecorator import ColorLogDecorator
 
 INPUT_DIR = os.path.join(settings.INPUT_PATH, "nerResult")
 OUTPUT_DIR = os.path.join(settings.OUTPUT_PATH, 'networkRaw')
 ABS_THRESHOLD = 1
-NUM_THRESHOLD = 1
+NUM_THRESHOLD = 10
 
 
 def __flush_str(msg: str):
@@ -59,13 +57,15 @@ def main():
         location_counter = Counter(content["location"])
         location_list = location_counter.most_common()
         for i in range(len(location_list)):
+            location1 = location_list[i][0]
+            location1_num = location_list[i][1]
+            if location1_num <= NUM_THRESHOLD:
+                continue
             for j in range(i, len(location_list)):
                 if i != j:
-                    location1 = location_list[i][0]
                     location2 = location_list[j][0]
-                    location1_num = location_list[i][1]
                     location2_num = location_list[j][1]
-                    if location1_num <= NUM_THRESHOLD or location2_num <= NUM_THRESHOLD:
+                    if location2_num <= NUM_THRESHOLD:
                         continue
                     if abs(location1_num - location2_num) <= ABS_THRESHOLD:
                         if not graph.has_node(location1):
@@ -78,7 +78,7 @@ def main():
                         else:
                             x = location2
                             y = location1
-                        graph.add_edge(x, y, weight=abs(location1_num - location2_num))
+                        graph.add_edge(x, y)
     print("\r" + ColorLogDecorator.yellow(__flush_str("Step 2 - construct network: Done")))
 
     # step 3: the result output
@@ -87,7 +87,6 @@ def main():
         os.makedirs(OUTPUT_DIR)
     nx.write_gexf(graph, os.path.join(OUTPUT_DIR, "location.gexf"))
     print(ColorLogDecorator.yellow(": Done"))
-
     print(ColorLogDecorator.green("- ALL DONE -", "strong"))
 
 

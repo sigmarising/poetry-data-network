@@ -10,7 +10,8 @@ from module.ColorLogDecorator import ColorLogDecorator
 
 INPUT_DIR = os.path.join(settings.INPUT_PATH, 'nerResult')
 OUTPUT_DIR = os.path.join(settings.OUTPUT_PATH, 'networkRaw')
-COS_THRESHOLD = 0.95
+COS_THRESHOLD = 0.7
+NUM_THRESHOLD = 3
 
 
 def __flush_str(msg: str):
@@ -77,12 +78,19 @@ def main():
     # step 2: construct the network
     print(ColorLogDecorator.yellow(__flush_str("Step 2 - construct network")), end="")
     for i in range(len(all_filepath_list)):
+        with open(all_filepath_list[i], 'r+', encoding='utf-8', errors='ignore') as f1:
+            content1 = json.load(f1)
+
+        if len(content1["location"]) <= NUM_THRESHOLD:
+            continue
+
         for j in range(i, len(all_filepath_list)):
             if i != j:
-                with open(all_filepath_list[i], 'r+', encoding='utf-8', errors='ignore') as f1:
-                    content1 = json.load(f1)
                 with open(all_filepath_list[j], 'r+', encoding='utf-8', errors='ignore') as f2:
                     content2 = json.load(f2)
+                
+                if len(content2["location"]) <= NUM_THRESHOLD:
+                    continue
 
                 node1 = content1["dynasty"] + " " + content1["author"]
                 node2 = content2["dynasty"] + " " + content2["author"]
