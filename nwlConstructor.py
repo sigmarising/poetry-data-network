@@ -10,10 +10,11 @@ from module.ColorLogDecorator import ColorLogDecorator
 INPUT_DIR = os.path.join(settings.INPUT_PATH, "nerResult")
 OUTPUT_DIR = os.path.join(settings.OUTPUT_PATH, 'networkRaw')
 ABS_THRESHOLD = 1
+NUM_THRESHOLD = 3
 
 
 def __flush_str(msg: str):
-    fixed_len = 100
+    fixed_len = 50
     if len(msg) <= fixed_len:
         return msg[0:fixed_len].ljust(fixed_len, ' ')
     else:
@@ -63,6 +64,8 @@ def main():
                     location2 = location_list[j]
                     location1_num = location_counter[location1]
                     location2_num = location_counter[location2]
+                    if location1_num < NUM_THRESHOLD or location2_num < NUM_THRESHOLD:
+                        continue
                     if abs(location1_num - location2_num) <= ABS_THRESHOLD:
                         if not graph.has_node(location1):
                             graph.add_node(location1)
