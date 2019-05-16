@@ -16,7 +16,7 @@ NUM_THRESHOLD = 1
 def __flush_str(msg: str):
     fixed_len = 70
     if len(msg) <= fixed_len:
-        return msg[0:fixed_len].ljust(fixed_len, ' ')
+        return msg.ljust(fixed_len, ' ')
     else:
         return msg[0:fixed_len - 3] + "..."
 
@@ -60,10 +60,10 @@ def main():
         for i in range(len(location_list)):
             for j in range(i, len(location_list)):
                 if i != j:
-                    location1 = location_list[i]
-                    location2 = location_list[j]
-                    location1_num = location_counter[location1]
-                    location2_num = location_counter[location2]
+                    location1 = location_list[i][0]
+                    location2 = location_list[j][0]
+                    location1_num = location_list[i][1]
+                    location2_num = location_list[j][1]
                     if location1_num < NUM_THRESHOLD:
                         continue
                     if abs(location1_num - location2_num) <= ABS_THRESHOLD:

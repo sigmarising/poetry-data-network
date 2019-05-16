@@ -16,7 +16,7 @@ COS_THRESHOLD = 0.95
 def __flush_str(msg: str):
     fixed_len = 70
     if len(msg) <= fixed_len:
-        return msg[0:fixed_len].ljust(fixed_len, ' ')
+        return msg.ljust(fixed_len, ' ')
     else:
         return msg[0:fixed_len - 3] + "..."
 
