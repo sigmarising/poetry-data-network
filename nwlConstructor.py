@@ -10,11 +10,11 @@ from module.ColorLogDecorator import ColorLogDecorator
 INPUT_DIR = os.path.join(settings.INPUT_PATH, "nerResult")
 OUTPUT_DIR = os.path.join(settings.OUTPUT_PATH, 'networkRaw')
 ABS_THRESHOLD = 1
-NUM_THRESHOLD = 3
+NUM_THRESHOLD = 1
 
 
 def __flush_str(msg: str):
-    fixed_len = 50
+    fixed_len = 70
     if len(msg) <= fixed_len:
         return msg[0:fixed_len].ljust(fixed_len, ' ')
     else:
@@ -86,7 +86,7 @@ def main():
         os.makedirs(OUTPUT_DIR)
     with open(os.path.join(OUTPUT_DIR, "location.json"), 'w+', encoding='utf-8', errors='ignore') as f:
         json.dump(json_graph.node_link_data(graph), f, ensure_ascii=False, indent=4)
-    nx.draw_networkx(graph, node_size=5, width=0.5)
+    nx.draw_networkx(graph, node_size=5)
     plt.savefig(os.path.join(OUTPUT_DIR, "location.png"))
     print(ColorLogDecorator.yellow(": Done"))
 
