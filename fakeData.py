@@ -1,3 +1,10 @@
+"""
+File: fakeData.py
+Desc:
+    脚本 - 用于创建假数据
+    为地点网络和人物网络 构建假数据
+"""
+
 import os
 import json
 import settings

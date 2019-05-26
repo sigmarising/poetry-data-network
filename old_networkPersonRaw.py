@@ -1,3 +1,10 @@
+"""
+Desc:
+    脚本 - 从诗人提及的地点中
+    使用自定义的规则（较旧版本）
+    构建诗人之间的关联关系
+"""
+
 import os
 import json
 import settings

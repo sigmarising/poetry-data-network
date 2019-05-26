@@ -1,3 +1,10 @@
+"""
+File: handleRoute.py
+Desc:
+    脚本 - 用于处理将唐宋编年史地图数据
+    单纯依据轨迹地点指向信息 创建地点关系网络
+"""
+
 import os
 import json
 import settings
